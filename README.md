@@ -1,5 +1,8 @@
 # Tripify – AI Travel Planner Assistant
 
+**Live demo:** https://huggingface.co/spaces/muhammad-uzair02/tripify  
+_The demo runs without a backend: the trip planner shows a sample itinerary, and accounts and the contact form are disabled. The full app needs the Node and Python servers in this repo._
+
 A travel planning web app: AI-generated trip itineraries, weather forecasts, hotels, transport and tours.
 
 ## Stack
