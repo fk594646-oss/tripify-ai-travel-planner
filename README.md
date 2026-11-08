@@ -13,5 +13,10 @@ A travel planning web app: AI-generated trip itineraries, weather forecasts, hot
 3. Account backend: `cd Backend && npm install && npm run dev`
 4. Trip planner: `cd Backend && pip install -r requirements.txt && python app.py`
 
-## Status
-Work in progress. API URLs in the frontend currently point to `localhost`.
+## Server addresses
+The frontend reads its server addresses from environment variables (see `Frontend/src/config.js`), defaulting to localhost:
+- `VITE_TRIP_API_URL` - Flask trip planner (default `http://localhost:5000`)
+- `VITE_AUTH_API_URL` - Express accounts/contact API (default `http://localhost:9001`)
+
+## Static demo (no backend)
+`cd Frontend && npm install && npm run build:demo` builds a version that needs no servers: the trip planner shows a sample itinerary, and accounts and the contact form are disabled. Upload the `dist/` folder to any static host (GitHub Pages, Netlify, Hugging Face Static Space).

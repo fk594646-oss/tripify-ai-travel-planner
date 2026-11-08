@@ -1,7 +1,8 @@
 import './App.css'
 import Home from './Pages/Home.jsx'
 import Hotels from './Pages/Hotels.jsx'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, HashRouter, Routes, Route} from 'react-router-dom'
+import { DEMO } from './config.js'
 import Transport from './Pages/Transport.jsx'
 import Tour from './Pages/Tour.jsx'
 import TravelPlanner from './Pages/TravelPlanner.jsx'
@@ -16,9 +17,12 @@ import AuthPages from './Components/Login.jsx'
 import ProfileSettings from './Components/ProfileSettings.jsx'
 import ScrollToTop from './Components/ScrollToTop.jsx'
 
+// Static hosts have no server-side routing, so the demo uses #/ links
+const Router = DEMO ? HashRouter : BrowserRouter
+
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <ScrollToTop/>
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -41,7 +45,7 @@ function App() {
         {/* Profile Settings Route */}
         <Route path='/profile-settings' element={<ProfileSettings/>}/>
       </Routes>
-    </BrowserRouter>
+    </Router>
   )
 }
 

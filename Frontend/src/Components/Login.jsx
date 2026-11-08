@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plane, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { DEMO, AUTH_API } from '../config.js';
 
 const AuthPages = () => {
   const location = useLocation();
@@ -104,12 +105,17 @@ const AuthPages = () => {
       return;
     }
 
+    if (DEMO) {
+      setErrors({ general: "Accounts are disabled in this online demo (no backend). See the GitHub repo to run the full app." });
+      return;
+    }
+
     setLoading(true);
 
     try {
       const endpoint = isLogin
-        ? "http://localhost:5000/api/auth/login"
-        : "http://localhost:5000/api/auth/signup";
+        ? `${AUTH_API}/api/auth/login`
+        : `${AUTH_API}/api/auth/signup`;
 
       const payload = isLogin
         ? {

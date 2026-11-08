@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { MapPin, Calendar, Users, Wallet, Sparkles, Hotel, Utensils, MapPinned, DollarSign, Lightbulb, Star, Cloud, Thermometer, Download } from 'lucide-react';
 
 // ─── HTML Download Utility ────────────────────────────────────────────────────
+import { DEMO, TRIP_API } from '../config.js';
+import { DEMO_NOTICE, sampleTrip, sampleWeather } from '../demo/sampleTrip.js';
+
 const downloadTripAsHTML = (tripPlan, weatherData, formData) => {
     if (!tripPlan) return;
 
@@ -393,8 +396,9 @@ const TravelPlannerContent = () => {
         setWeatherLoading(true);
         setWeatherError(null);
         setWeatherData(null);
+        if (DEMO) { setWeatherData(sampleWeather(departureDate, days)); setWeatherLoading(false); return; }
         try {
-            const res  = await fetch(`http://localhost:5000/api/travel/weather?destination=${encodeURIComponent(destination)}&departure_date=${departureDate}&days=${days}`);
+            const res  = await fetch(`${TRIP_API}/api/travel/weather?destination=${encodeURIComponent(destination)}&departure_date=${departureDate}&days=${days}`);
             const json = await res.json();
             console.log('Weather API response:', json);
             if (json.success) setWeatherData(json.data);
@@ -416,8 +420,16 @@ const TravelPlannerContent = () => {
         setIsLoading(true); setError(null); setTripPlan(null);
         fetchWeather(destination, departureDate, days);
 
+        if (DEMO) {
+            setTripPlan(sampleTrip);
+            setIsLoading(false);
+            alert(DEMO_NOTICE);
+            setTimeout(() => document.getElementById('trip-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+            return;
+        }
+
         try {
-            const res    = await fetch('http://localhost:5000/api/travel/generate-trip', {
+            const res    = await fetch(`${TRIP_API}/api/travel/generate-trip`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

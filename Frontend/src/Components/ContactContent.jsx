@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import axios from "axios";
+import { DEMO, AUTH_API } from "../config.js";
 
 const ContactContent = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -60,10 +61,15 @@ const ContactContent = () => {
 
   const handleSubmit = async () => {
 
+    if (DEMO) {
+        alert("This is an online demo without a backend, so messages are not sent.");
+        return;
+    }
+
     try {
 
         const response = await axios.post(
-            "http://localhost:9001/api/contact",
+            `${AUTH_API}/api/contact`,
             formData
         );
 
